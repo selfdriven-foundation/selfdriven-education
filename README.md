@@ -1,0 +1,4 @@
+- selfdriven.university
+- selfdriven.community/for/educators
+- selfdriven.foundation/insights
+- selfdriven.guides
