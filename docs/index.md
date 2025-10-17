@@ -7,7 +7,7 @@ title: Home
 
 - [For Educators](https://www.selfdriven.community/for/educators)
 - [selfdriven Learning](https://selfdriven.fyi/learning)
-- [Resources](/resourses/)
+- [Resources](/resources/)
 
 ### selfdriven Support
 - [Guides](https://selfdriven.support/guides/)
