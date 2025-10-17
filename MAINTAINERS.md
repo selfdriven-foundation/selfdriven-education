@@ -6,13 +6,13 @@ This file outlines the current maintainers of this project and their responsibil
 
 ## Current Maintainers
 
-### 1. [Mark Byers](https://github.com/selfdriven-foundation)
+### 1. [Bence Lukacs](https://github.com/spencelukacs)
 - **Role**: Lead Maintainer
 - **Responsibilities**:
   - Approving and merging pull requests.
   - Managing project roadmap and priorities.
   - Representing the project in external discussions.
-- **Contact**: mark.byers@selfdriven.foundation
+- **Contact**: bence.lukacs@selfdriven.foundation
 
 ## Becoming a Maintainer
 If you're interested in becoming a maintainer, reach out to one of the current maintainers via GitHub or their listed contact email. Include details about:
