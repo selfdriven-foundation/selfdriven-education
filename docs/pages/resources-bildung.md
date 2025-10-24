@@ -12,8 +12,8 @@ Exploring if AI (inorganic intelligence) replaces the utilitarian or job-trainin
 
 ### selfdriven.university CoP Bildung Session by Benjamin Heurich
 
+- [Presentation](/assets/pdfs/bheurich-revisiting-humboldt-reformation_higher_education_cop.pdf)
 - [Recording](https://drive.google.com/file/d/1NTGsK2G-2LJucgFVdz5UqnkXC65iv-BA)
-- [Presentation](/pdfs/bheurich-revisiting-humboldt-reformation_higher_education_cop.pdf)
 
 ---
 *When machines do the knowing and the doing, education’s last human frontier is being.*
