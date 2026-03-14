@@ -1,5 +1,7 @@
-title: "selfdrivenAI"
-description: "Combining the selfdriven Framework with the power of Generative AI to enable decentralised human/purpose driven communities"
+title: "selfdriven Education"
+description: "Research & Frameworks to help commununities self-actate"
+context: "education"
+repo: "selfdriven-eduction"
 baseurl: ""
 url: ""
 defaults:

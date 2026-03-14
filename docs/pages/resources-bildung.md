@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: selfdriven
 title: Resources Bildung - selfdriven Education
 permalink: /resources/bildung/
 ---

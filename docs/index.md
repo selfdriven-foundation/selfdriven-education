@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Home
+title: selfdriven Education
 ---
 
 ## Research & Frameworks to help commununities self-actate.
 
 - [For Educators](https://www.selfdriven.community/for/educators)
 - [selfdriven Learning](https://selfdriven.fyi/learning)
-- [Resources](/resources/)
+- [Resources](/resources)
 
 ### selfdriven Support
 - [Guides](https://selfdriven.support/guides/)
