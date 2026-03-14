@@ -7,6 +7,7 @@ title: selfdriven Education
 
 - [For Educators](https://www.selfdriven.community/for/educators)
 - [selfdriven Learning](https://selfdriven.fyi/learning)
+- [selfdriven.university CoP](https://selfdriven.university)
 - [Resources](/resources)
 
 ## selfdriven Support
