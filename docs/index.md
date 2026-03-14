@@ -10,6 +10,10 @@ title: selfdriven Education
 - [selfdriven.university CoP](https://selfdriven.university)
 - [Resources](/resources)
 
+## Supported By
+- [selfdriven.institute](https://selfdriven.institute)
+- [selfdriven.foundation](https://selfdriven.foundation)
+
 ## selfdriven Support
 - [Guides](https://selfdriven.support/guides/)
 - [selfdriven.services](https://selfdriven.services) - professional services
