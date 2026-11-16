@@ -1,0 +1,1147 @@
+---
+layout: selfdriven
+title: Resources Bildung - selfdriven Education
+permalink: /learn/auslan
+---
+
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn Auslan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1F4EE;
+  --surface:#FFFFFF;
+  --sunk:#E6ECE5;
+  --ink:#12302A;
+  --muted:#52665F;
+  --rule:#D3DCD4;
+  --d:#1F7A68;        /* dominant hand: eucalyptus */
+  --d-line:#0C3A31;
+  --nd:#F2B84B;       /* other hand: wattle */
+  --nd-line:#8C610E;
+  --mark:#D1316A;     /* contact points + movement */
+  --good:#1F7A68;
+  --bad:#B4232F;
+  --halo:var(--surface);
+  --radius-lg:22px;
+  --radius:14px;
+  --font:"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0E1D1A; --surface:#162A26; --sunk:#1D3530; --ink:#E6F0EC; --muted:#A3B8B1;
+    --rule:#2A4741; --d:#3DB497; --d-line:#08302A; --nd:#F2B84B; --nd-line:#6A470A; --mark:#FF5C93;
+    --good:#3DB497; --bad:#FF6B6B; color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:1.0625rem;line-height:1.55;padding-bottom:84px}
+@media (min-width:900px){body{padding-bottom:0}}
+a{color:var(--d)}
+a:hover{text-decoration-thickness:2px}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px;border-radius:6px}
+h1,h2,h3{line-height:1.12;margin:0 0 .5rem;letter-spacing:-.015em}
+h1{font-size:clamp(2.3rem,7vw,4rem);font-weight:800;letter-spacing:-.03em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0 0 1rem;max-width:66ch}
+.muted{color:var(--muted)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand svg{width:30px;height:30px}
+.nav{display:none;gap:2px;margin-left:8px}
+.nav a{padding:8px 12px;border-radius:999px;text-decoration:none;color:var(--ink);font-weight:500}
+.nav a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+.nav a:hover:not([aria-current="page"]){background:var(--sunk)}
+@media (min-width:900px){.nav{display:flex}}
+.hand-toggle{margin-left:auto;display:flex;background:var(--sunk);border-radius:999px;padding:3px}
+.hand-toggle button{border:0;background:transparent;padding:6px 12px;border-radius:999px;font-size:.875rem;font-weight:700;cursor:pointer;color:var(--muted)}
+.hand-toggle button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
+/* bottom tabs (mobile) */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--rule);display:grid;grid-template-columns:repeat(6,1fr);padding:0 4px max(6px,env(safe-area-inset-bottom))}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 6px;text-decoration:none;color:var(--muted);font-size:.75rem;font-weight:700;position:relative}
+.tabs a .g{font-size:1.05rem;line-height:1;font-weight:800;letter-spacing:-.02em;color:inherit}
+.tabs a[aria-current="page"]{color:var(--ink)}
+.tabs a[aria-current="page"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--d)}
+@media (min-width:900px){.tabs{display:none}}
+
+/* views */
+.view{display:none;padding:28px 0 56px}
+.view.on{display:block}
+.view-head{margin-bottom:22px}
+.view-head p{font-size:1.125rem}
+
+/* hand svg */
+svg.hand{display:block;width:100%;height:auto;overflow:visible}
+svg.hand .ln{fill:none;stroke-linecap:round;stroke-linejoin:round}
+svg.hand .sh{stroke-linejoin:round}
+svg.hand .ndo{stroke:var(--nd-line)} svg.hand rect.ndo{fill:var(--nd-line)}
+svg.hand .ndf{stroke:var(--nd)} svg.hand rect.ndf{fill:var(--nd);stroke:none}
+svg.hand .dh{stroke:var(--halo)} svg.hand rect.dh{fill:var(--halo)}
+svg.hand .do{stroke:var(--d-line)} svg.hand rect.do{fill:var(--d-line)}
+svg.hand .df{stroke:var(--d)} svg.hand rect.df{fill:var(--d);stroke:none}
+svg.hand .cr-nd{stroke:var(--nd-line);fill:none;stroke-width:3;stroke-linecap:round;opacity:.55}
+svg.hand .cr-d{stroke:var(--d-line);fill:none;stroke-width:3;stroke-linecap:round;opacity:.6}
+svg.hand .dot{fill:var(--mark);stroke:var(--halo);stroke-width:3}
+svg.hand .mv{fill:none;stroke:var(--mark);stroke-width:4;stroke-linecap:round;stroke-dasharray:2 9}
+svg.hand .mvh{fill:var(--mark)}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.9375rem;color:var(--muted);margin:0}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.sw{width:16px;height:16px;border-radius:50%;display:inline-block;border:2.5px solid}
+.sw.d{background:var(--d);border-color:var(--d-line)}
+.sw.nd{background:var(--nd);border-color:var(--nd-line)}
+.sw.mk{background:var(--mark);border-color:var(--mark);width:12px;height:12px}
+
+/* hero / player */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+.hero > *,.home-grid > *,.drill > *,.culture-grid > *,.sheet-body > *{min-width:0}
+@media (min-width:900px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;padding-top:12px}}
+.hero h1{max-width:11ch}
+.hero .lede{font-size:1.2rem;max-width:44ch}
+.speller{background:var(--surface);border-radius:var(--radius-lg);padding:18px;box-shadow:0 1px 0 var(--rule),0 10px 30px -18px rgba(18,48,42,.35)}
+.spell-input{display:flex;gap:8px}
+.spell-input input{flex:1;min-width:0;border:2px solid var(--rule);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:1.25rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.spell-input input::placeholder{text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)}
+.spell-input input:focus{border-color:var(--d);outline:none}
+.stage{position:relative;display:grid;grid-template-columns:1fr;place-items:center;margin:10px 0 6px}
+.stage svg{max-width:340px}
+.stage .big{position:absolute;top:6px;left:6px;font-size:3rem;font-weight:800;line-height:1;letter-spacing:-.03em}
+.stage .big.hide{visibility:hidden}
+.stage.flash svg{animation:pop .22s ease-out}
+@keyframes pop{from{opacity:.25;transform:scale(.97)}to{opacity:1;transform:none}}
+.strip{display:flex;gap:4px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:thin;min-height:46px}
+.strip button{flex:0 0 auto;min-width:34px;height:38px;border-radius:10px;border:0;background:var(--sunk);font-weight:800;font-size:1.05rem;cursor:pointer}
+.strip button.gap{min-width:16px;background:transparent;cursor:default}
+.strip button.on{background:var(--ink);color:var(--bg)}
+.strip.hidden button:not(.on):not(.gap){color:transparent}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--sunk);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px;line-height:1.2}
+.btn:hover{filter:brightness(.97)}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.small{padding:7px 12px;font-size:.9375rem}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.seg{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:999px;font-weight:700;font-size:.9375rem;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:.9375rem;font-weight:500;cursor:pointer;user-select:none}
+.check input{width:18px;height:18px;accent-color:var(--d)}
+.note{font-size:.875rem;color:var(--muted);margin:10px 0 0}
+
+/* path */
+.path{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:step}
+.path li{counter-increment:step}
+.path a{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:14px 16px;background:var(--surface);border-radius:var(--radius);text-decoration:none;color:var(--ink);border:1px solid var(--rule)}
+.path a::before{content:counter(step);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.25rem;background:var(--sunk)}
+.path a:hover{border-color:var(--d)}
+.path strong{display:block;font-size:1.0625rem}
+.path span{color:var(--muted);font-size:.9375rem}
+.home-grid{display:grid;gap:36px;margin-top:48px}
+@media (min-width:900px){.home-grid{grid-template-columns:1.1fr 1fr;gap:56px}}
+.progress{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 0}
+.progress div{background:var(--surface);border-radius:var(--radius);padding:12px 14px;border:1px solid var(--rule)}
+.progress b{display:block;font-size:1.5rem;font-weight:800;line-height:1.1}
+.progress small{color:var(--muted);font-size:.8125rem}
+.transfer{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.transfer p{margin:0;flex:1 1 240px;font-size:.9375rem;color:var(--muted)}
+.linkish{background:none;border:0;padding:0;color:var(--d);text-decoration:underline;cursor:pointer;font:inherit}
+.xfer{display:grid;gap:24px;margin-top:8px}
+@media (min-width:640px){.xfer{grid-template-columns:1fr 1fr}}
+.xfer h3{margin-bottom:4px}
+.xfer p{font-size:.9375rem}
+.xfer textarea{width:100%;border:2px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;font-size:.875rem;line-height:1.4;word-break:break-all;resize:vertical;margin-bottom:10px}
+.xfer textarea:focus{border-color:var(--d);outline:none}
+.factlist{margin:0;padding:0;list-style:none;display:grid;gap:14px}
+.factlist li{padding-left:18px;border-left:4px solid var(--nd)}
+
+/* alphabet */
+.vowels{display:grid;gap:20px;background:var(--surface);border-radius:var(--radius-lg);padding:20px;margin-bottom:34px}
+@media (min-width:760px){.vowels{grid-template-columns:minmax(240px,340px) 1fr;align-items:center}}
+.vowel-keys{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.vowel-keys button{width:52px;height:52px;border-radius:14px;border:2px solid var(--rule);background:var(--bg);font-size:1.5rem;font-weight:800;cursor:pointer}
+.vowel-keys button[aria-pressed="true"]{border-color:var(--mark);background:var(--surface);color:var(--mark)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
+@media (min-width:700px){.tiles{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px}}
+.tile{position:relative;border:1px solid var(--rule);background:var(--surface);border-radius:var(--radius);padding:8px 8px 6px;cursor:pointer;text-align:left;display:flex;flex-direction:column}
+.tile:hover{border-color:var(--d)}
+.tile .lt{font-size:1.6rem;font-weight:800;line-height:1;letter-spacing:-.02em;padding:2px 4px}
+.tile svg{margin-top:-6px}
+.tile.seen::after{content:"";position:absolute;top:10px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--d)}
+.tile .cap{font-size:.75rem;color:var(--muted);padding:0 4px 2px}
+.section-gap{margin-top:40px}
+
+/* sheet (detail) */
+.scrim{position:fixed;inset:0;background:rgba(8,20,18,.5);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.scrim.on{display:flex}
+@media (min-width:760px){.scrim{align-items:center}}
+.sheet{background:var(--surface);width:100%;max-width:720px;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0;padding:18px 20px 28px;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+@media (min-width:760px){.sheet{border-radius:24px;padding:24px 28px 30px}}
+.sheet-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sheet-top .x{margin-left:auto}
+.sheet-body{display:grid;gap:18px}
+@media (min-width:640px){.sheet-body{grid-template-columns:260px 1fr;align-items:start}}
+.sheet .bigl{font-size:4rem;font-weight:800;line-height:.9;letter-spacing:-.04em}
+.sheet .how{font-size:1.125rem}
+.tip{background:var(--sunk);border-radius:12px;padding:12px 14px;font-size:.9688rem}
+.sheet-nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+/* numbers */
+.pattern{background:var(--surface);border-radius:var(--radius-lg);padding:20px;margin-bottom:30px;display:grid;gap:16px}
+@media (min-width:760px){.pattern{grid-template-columns:1fr 1.4fr;align-items:center}}
+.pattern-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pattern-row figure{margin:0;text-align:center}
+.pattern-row figcaption{font-weight:800;font-size:1.25rem}
+
+/* signs */
+.sign-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.search{flex:1 1 240px;border:2px solid var(--rule);background:var(--surface);border-radius:12px;padding:11px 14px;font-size:1.0625rem}
+.search:focus{border-color:var(--d);outline:none}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.chips button{flex:0 0 auto;border:1.5px solid var(--rule);background:var(--surface);padding:7px 13px;border-radius:999px;font-weight:700;font-size:.9375rem;cursor:pointer;color:var(--muted)}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.cat{margin-top:26px}
+.cat > h2{font-size:1.25rem;display:flex;align-items:baseline;gap:10px}
+.cat > h2 small{font-size:.875rem;color:var(--muted);font-weight:500}
+.cat-note{font-size:.9375rem;color:var(--muted);margin:-2px 0 8px}
+.signs{list-style:none;margin:0;padding:0;background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--rule)}
+.sign{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:16px 18px;border-top:1px solid var(--rule)}
+.sign:first-child{border-top:0}
+.sign h3{margin:0;font-size:1.25rem}
+.sign .how{grid-column:1 / -1;margin:2px 0 0;max-width:70ch}
+.sign .tipline{grid-column:1 / -1;margin:0;font-size:.9375rem;color:var(--muted)}
+.sign .links{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.9375rem;margin-top:4px}
+.know{border:2px solid var(--rule);background:transparent;border-radius:999px;padding:5px 12px;font-weight:700;font-size:.875rem;cursor:pointer;color:var(--muted);align-self:start;white-space:nowrap}
+.know[aria-pressed="true"]{border-color:var(--d);background:var(--d);color:#fff}
+.empty{padding:28px 18px;text-align:center;color:var(--muted)}
+
+/* practise */
+.modes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.modes button{border:1.5px solid var(--rule);background:var(--surface);padding:9px 15px;border-radius:999px;font-weight:700;cursor:pointer;color:var(--muted)}
+.modes button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.drill{background:var(--surface);border-radius:var(--radius-lg);padding:20px;display:grid;gap:18px;box-shadow:0 1px 0 var(--rule),0 10px 30px -18px rgba(18,48,42,.35)}
+@media (min-width:760px){.drill{grid-template-columns:minmax(260px,380px) 1fr;align-items:center;padding:28px}}
+.drill .q{font-size:1.25rem;font-weight:700}
+.drill .prompt-text{font-size:1.25rem;line-height:1.5;background:var(--sunk);border-radius:14px;padding:16px 18px;margin:0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts button{border:2px solid var(--rule);background:var(--bg);border-radius:14px;padding:14px 10px;font-size:1.25rem;font-weight:800;cursor:pointer;min-height:60px}
+.opts button:hover:not([disabled]){border-color:var(--ink)}
+.opts button.right{border-color:var(--good);background:var(--good);color:#fff}
+.opts button.wrong{border-color:var(--bad);color:var(--bad)}
+.score{display:flex;gap:18px;font-size:.9375rem;color:var(--muted);flex-wrap:wrap}
+.score b{color:var(--ink);font-size:1.125rem}
+.feedback{min-height:1.6em;font-weight:700;margin:0}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+.answer{display:flex;gap:8px}
+.answer input{flex:1;min-width:0;border:2px solid var(--rule);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:1.25rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.answer input:focus{border-color:var(--d);outline:none}
+.card{perspective:1000px;cursor:pointer;min-height:240px;border:0;background:transparent;padding:0;width:100%;text-align:left}
+.card-in{position:relative;min-height:240px;transition:transform .45s;transform-style:preserve-3d}
+.card.flip .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:22px;display:flex;flex-direction:column;justify-content:center;background:var(--sunk)}
+.face.back{transform:rotateY(180deg);background:var(--bg);border:2px solid var(--rule)}
+.face .word{font-size:2.4rem;font-weight:800;letter-spacing:-.02em}
+.face small{color:var(--muted)}
+
+/* culture */
+.culture-grid{display:grid;gap:28px}
+@media (min-width:900px){.culture-grid{grid-template-columns:1fr 1fr;gap:40px}}
+.panel{background:var(--surface);border-radius:var(--radius-lg);padding:22px}
+.dos{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.dos li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.dos li::before{content:"";width:28px;height:28px;border-radius:50%;background:var(--d) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
+.dos li.dont::before{background:var(--bad) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 7l10 10M17 7L7 17' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.res{list-style:none;padding:0;margin:0;display:grid;gap:2px}
+.res li{padding:12px 0;border-top:1px solid var(--rule)}
+.res li:first-child{border-top:0}
+.res a{font-weight:700}
+.res span{display:block;color:var(--muted);font-size:.9375rem}
+.foot{border-top:1px solid var(--rule);padding:22px 0 30px;font-size:.875rem;color:var(--muted)}
+.foot p{max-width:90ch}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Learn Auslan home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="11" cy="16" r="8" fill="var(--d)" stroke="var(--d-line)" stroke-width="2"/><circle cx="21" cy="16" r="8" fill="var(--nd)" stroke="var(--nd-line)" stroke-width="2"/></svg>
+      Learn Auslan
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#home">Spell</a><a href="#alphabet">Alphabet</a><a href="#numbers">Numbers</a><a href="#signs">Signs</a><a href="#practise">Practise</a><a href="#culture">Deaf culture</a>
+    </nav>
+    <div class="hand-toggle" role="group" aria-label="Which hand do you write with?">
+      <button type="button" data-hand="right" aria-pressed="true">Right</button>
+      <button type="button" data-hand="left" aria-pressed="false">Left</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<section class="view" id="v-home" aria-labelledby="h-home">
+  <div class="hero">
+    <div>
+      <h1 id="h-home">Spell your name in Auslan</h1>
+      <p class="lede">Australian Sign Language spells words with two hands. Type anything and watch each letter take shape.</p>
+      <p class="legend" aria-label="Diagram key">
+        <span><i class="sw d"></i>The hand you write with</span>
+        <span><i class="sw nd"></i>Your other hand</span>
+        <span><i class="sw mk"></i>Contact or movement</span>
+      </p>
+      <p class="note">Diagrams show a signer facing you. Switch Right / Left at the top if you write with your left hand.</p>
+    </div>
+    <div class="speller" id="speller"></div>
+  </div>
+
+  <div class="home-grid">
+    <div>
+      <h2>Start here</h2>
+      <p class="muted">A path for your first week. Ten minutes a day is plenty.</p>
+      <ol class="path">
+        <li><a href="#alphabet"><div><strong>Vowels first</strong><span>A E I O U sit on the fingertips of your other hand.</span></div></a></li>
+        <li><a href="#alphabet"><div><strong>The rest of the alphabet</strong><span>21 consonants, most made on or against your other hand.</span></div></a></li>
+        <li><a href="#numbers"><div><strong>Count to ten</strong><span>One hand, with a neat pattern from six to nine.</span></div></a></li>
+        <li><a href="#signs"><div><strong>Your first <span data-count></span> signs</strong><span>Greetings, questions, family and everyday words.</span></div></a></li>
+        <li><a href="#practise"><div><strong>Practise reading</strong><span>Quizzes, flashcards and words fingerspelled at speed.</span></div></a></li>
+      </ol>
+      <div class="progress" id="progress" aria-live="polite"></div>
+      <div class="transfer">
+        <p>Your progress is saved in this browser. To carry on using another phone or computer, move it with a transfer code.</p>
+        <button class="btn" type="button" data-transfer>Transfer progress</button>
+      </div>
+    </div>
+    <div>
+      <h2>About Auslan</h2>
+      <ul class="factlist">
+        <li>Auslan is the language of the Australian Deaf community, with its own grammar. It isn't signed English.</li>
+        <li>It shares its two-handed alphabet with British and New Zealand Sign Language. American Sign Language is a different language with a one-handed alphabet.</li>
+        <li>16,242 people said they use Auslan at home in the 2021 Census, up from 5,306 in 2001.</li>
+        <li>Your face is part of the grammar. Eyebrows, mouth and head movements change what a sign means.</li>
+      </ul>
+      <p style="margin-top:18px"><a class="btn" href="#culture">Read about Deaf culture and etiquette</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ALPHABET -->
+<section class="view" id="v-alphabet" aria-labelledby="h-alpha">
+  <div class="view-head">
+    <h1 id="h-alpha">The alphabet</h1>
+    <p class="muted">Your other hand is the page; the hand you write with is the pen. Use fingerspelling for names, places and words without a sign.</p>
+  </div>
+
+  <div class="vowels">
+    <div id="vowel-fig"></div>
+    <div>
+      <h2>Vowels live on your fingertips</h2>
+      <p>Point with your dominant index finger to the tips of your other hand, starting at the thumb: A, E, I, O, U.</p>
+      <div class="vowel-keys" role="group" aria-label="Choose a vowel" id="vowel-keys"></div>
+      <p class="muted" id="vowel-say" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <h2>All 26 letters</h2>
+  <p class="muted">Tap a letter for step-by-step instructions. A dot means you've opened it.</p>
+  <div class="tiles" id="alpha-tiles"></div>
+  <p class="note">Diagrams are simplified. Watch the letters move on <a href="https://auslan.org.au/spell/twohanded.html" target="_blank" rel="noopener">Auslan Signbank's fingerspelling page</a>, which can play them slow, medium or fast.</p>
+</section>
+
+<!-- NUMBERS -->
+<section class="view" id="v-numbers" aria-labelledby="h-num">
+  <div class="view-head">
+    <h1 id="h-num">Numbers 0 to 10</h1>
+    <p class="muted">Numbers use one hand. For one to five, your palm faces you.</p>
+  </div>
+  <div class="pattern">
+    <div>
+      <h2>The six-to-nine pattern</h2>
+      <p>Six is a raised thumb. Turn your fist sideways and add one finger for each number after that: seven, eight, nine.</p>
+    </div>
+    <div class="pattern-row" id="pattern-row"></div>
+  </div>
+  <div class="tiles" id="num-tiles"></div>
+  <p class="note">Numbers vary between regions, especially above ten. See every number from ten to a billion on <a href="https://auslan.org.au/numbersigns.html" target="_blank" rel="noopener">Auslan Signbank's number signs</a>.</p>
+</section>
+
+<!-- SIGNS -->
+<section class="view" id="v-signs" aria-labelledby="h-signs">
+  <div class="view-head">
+    <h1 id="h-signs">First signs</h1>
+    <p class="muted">Signs move, so each one links to a video. Read the steps, watch the video, then copy it in a mirror.</p>
+  </div>
+  <div class="sign-tools">
+    <label class="sr" for="sign-q">Search signs</label>
+    <input class="search" id="sign-q" type="search" placeholder="Search, e.g. thank you" autocomplete="off">
+  </div>
+  <div class="chips" role="group" aria-label="Filter by topic" id="sign-chips"></div>
+  <div id="sign-list"></div>
+  <p class="note">Sign descriptions are summarised in our own words from <a href="https://signplanet.net" target="_blank" rel="noopener">Sign Planet</a>. Regional variants exist; Auslan Signbank shows which states use each one.</p>
+</section>
+
+<!-- PRACTISE -->
+<section class="view" id="v-practise" aria-labelledby="h-prac">
+  <div class="view-head">
+    <h1 id="h-prac">Practise</h1>
+    <p class="muted">Short rounds work best. Reading fingerspelling is harder than doing it, so give it extra time.</p>
+  </div>
+  <div class="modes" role="group" aria-label="Practice type" id="modes"></div>
+  <div id="drill"></div>
+</section>
+
+<!-- CULTURE -->
+<section class="view" id="v-culture" aria-labelledby="h-cult">
+  <div class="view-head">
+    <h1 id="h-cult">Deaf culture</h1>
+    <p class="muted">Learning Auslan means joining a community, not just learning hand shapes.</p>
+  </div>
+  <div class="culture-grid">
+    <div class="panel">
+      <h2>Good manners</h2>
+      <ul class="dos">
+        <li><span>To get someone's attention, tap their shoulder or arm, wave where they can see you, or flick the lights.</span></li>
+        <li><span>Keep eye contact while you're signing or being signed to. Looking away reads as not paying attention.</span></li>
+        <li><span>Ask how a person prefers to communicate. Not every deaf person signs; some lipread or speak, and writing it down is fine.</span></li>
+        <li><span>When working with an interpreter, look at and speak to the Deaf person, not the interpreter.</span></li>
+        <li><span>Fingerspell your name when you introduce yourself. Sign names are given to you by Deaf people over time.</span></li>
+        <li class="dont"><span>Don't shout, cover your mouth, or talk while chewing if someone is lipreading you.</span></li>
+        <li class="dont"><span>Don't treat Auslan as a party trick. Learn it from Deaf teachers if you can.</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h2>Worth knowing</h2>
+      <ul class="factlist">
+        <li><b>Deaf and deaf.</b> A capital D usually means a person who belongs to the Deaf community and uses Auslan. Lowercase deaf describes hearing loss.</li>
+        <li><b>Recognition.</b> The Australian Government recognised Auslan as a community language in its 1987 national language policy, and again in 1991.</li>
+        <li><b>Two main dialects.</b> A northern dialect (NSW, Queensland, ACT) and a southern one (Victoria, SA, WA, Tasmania, NT). Colours and some numbers differ.</li>
+        <li><b>Family tree.</b> Auslan grew mainly from British Sign Language brought by Deaf immigrants, and is close to BSL and NZSL.</li>
+        <li><b>Faces are grammar.</b> Questions like what, where and who usually come with furrowed brows; yes/no questions with raised brows.</li>
+        <li><b>Peak body.</b> Deaf Australia represents the Auslan-using Deaf community nationally.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h2>Keep learning</h2>
+      <ul class="res">
+        <li><a href="https://auslan.org.au" target="_blank" rel="noopener">Auslan Signbank</a><span>The research dictionary, with videos and regional variants.</span></li>
+        <li><a href="https://signplanet.net" target="_blank" rel="noopener">Sign Planet</a><span>Written descriptions and topic lists for every sign.</span></li>
+        <li><a href="https://deafaustralia.org.au" target="_blank" rel="noopener">Deaf Australia</a><span>The national peak body for Deaf people.</span></li>
+        <li><a href="https://www.expression.com.au" target="_blank" rel="noopener">Expression Australia</a><span>Auslan classes and Deaf community services in Victoria and Tasmania.</span></li>
+        <li><a href="https://deafconnect.org.au" target="_blank" rel="noopener">Deaf Connect</a><span>Classes, interpreting and community services in several states.</span></li>
+        <li><a href="https://www.deafchildrenaustralia.org.au" target="_blank" rel="noopener">Deaf Children Australia</a><span>Printable alphabet and number posters, including left-handed versions.</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h2>Where to take a class</h2>
+      <p>TAFEs and community colleges run Auslan courses, from short evening classes to a Certificate II, III and IV and a Diploma. Look for courses taught by Deaf teachers.</p>
+      <p class="muted" style="margin:0">Sources: <a href="https://deafconnect.org.au/our-news/auslan-user-statistics-2021-census" target="_blank" rel="noopener">Deaf Connect census summary</a>, <a href="https://en.wikipedia.org/wiki/Auslan" target="_blank" rel="noopener">Auslan on Wikipedia</a>, <a href="https://victoriancurriculum.vcaa.vic.edu.au/Curriculum/ContentDescription/VCASFU106" target="_blank" rel="noopener">Victorian Curriculum: Auslan</a>, <a href="https://deafnav.com.au/understand/deaf-culture" target="_blank" rel="noopener">deafnav</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>A free study aid, not a replacement for a class. Sign descriptions are paraphrased from Sign Planet; videos are on Auslan Signbank (CC BY-NC-ND 4.0). Your progress is saved in this browser only. <button class="linkish" type="button" data-transfer>Transfer progress to another device</button></p>
+  </div>
+</footer>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#home"><span class="g">Aa</span>Spell</a>
+  <a href="#alphabet"><span class="g">A–Z</span>Alphabet</a>
+  <a href="#numbers"><span class="g">1–10</span>Numbers</a>
+  <a href="#signs"><span class="g">✋</span>Signs</a>
+  <a href="#practise"><span class="g">✓</span>Practise</a>
+  <a href="#culture"><span class="g">◎</span>Culture</a>
+</nav>
+
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- storage (best effort) ---------- */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem("auslan."+k); return v===null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem("auslan."+k, JSON.stringify(v)); }catch(e){} }
+};
+const state = {
+  hand: store.get("hand","right"),
+  seen: new Set(store.get("seen",[])),
+  known: new Set(store.get("known",[])),
+  best: store.get("best",0)
+};
+function saveSeen(){ store.set("seen",[...state.seen]); }
+function saveKnown(){ store.set("known",[...state.known]); }
+
+/* ---------- hand drawing engine ---------- */
+const FW = 15;
+const L = (x1,y1,x2,y2,w=FW)=>({t:"p",d:`M${x1} ${y1}L${x2} ${y2}`,w});
+const P = (d,w=FW)=>({t:"p",d,w});
+const R = (cx,cy,w,h,rx=18,rot=0)=>({t:"r",cx,cy,w,h,rx,rot});
+const O = (cx,cy,r,w=FW)=>({t:"c",cx,cy,r,w});
+const C = (d)=>({t:"x",d});              // crease detail
+const dot = (x,y)=>({t:"dot",x,y});
+const mv = (d)=>({t:"mv",d});
+
+function point(tx,ty,ang,len=56){
+  const a = ang*Math.PI/180, dx=Math.cos(a), dy=Math.sin(a);
+  const t=[tx+dx*8, ty+dy*8], k=[tx+dx*(8+len), ty+dy*(8+len)], f=[tx+dx*(8+len+20), ty+dy*(8+len+20)];
+  return [L(r1(t[0]),r1(t[1]),r1(k[0]),r1(k[1])), R(r1(f[0]),r1(f[1]),46,40,15,ang)];
+}
+function r1(n){ return Math.round(n*10)/10; }
+
+// Other hand, open and spread, back to viewer (thumb points to the centre).
+const TIP = {A:[108,160],E:[146,84],I:[172,72],O:[196,80],U:[220,104]};
+function ndOpen(){
+  return [R(178,176,78,72,24), L(152,160,146,84), L(170,156,172,72), L(188,158,196,80), L(205,166,220,104), L(150,196,108,160)];
+}
+function fistCreases(cx,cy,w,h){ // short lines suggesting folded fingers
+  const x0=cx-w/2, step=w/4, y=cy-h/2+8;
+  let d=""; for(let i=1;i<4;i++){ d+=`M${r1(x0+step*i)} ${r1(y)}v${r1(h*.34)}`; }
+  return C(d);
+}
+
+const LETTER = {
+  A:()=>({nd:ndOpen(), d:point(...TIP.A,192), m:[dot(...TIP.A)]}),
+  E:()=>({nd:ndOpen(), d:point(...TIP.E,200), m:[dot(...TIP.E)]}),
+  I:()=>({nd:ndOpen(), d:point(...TIP.I,218), m:[dot(...TIP.I)]}),
+  O:()=>({nd:ndOpen(), d:point(...TIP.O,232), m:[dot(...TIP.O)]}),
+  U:()=>({nd:ndOpen(), d:point(...TIP.U,244), m:[dot(...TIP.U)]}),
+  B:()=>({nd:[R(170,178,56,58,18), O(162,112,30)], d:[R(90,178,56,58,18), O(98,112,30)], m:[dot(130,112)]}),
+  C:()=>({nd:[], d:[R(72,126,40,70,18), P("M162 82A56 56 0 1 0 162 170",24)], m:[]}),
+  D:()=>({nd:[R(186,198,58,50,18), L(178,176,178,74), fistCreases(186,198,58,50)], d:[R(92,126,40,58,16), P("M170 76C96 66 92 186 168 178")], m:[dot(170,76),dot(168,178)]}),
+  F:()=>({nd:[R(184,196,62,52,18), L(172,174,168,74), L(190,174,188,76)], d:[R(58,116,52,50,18), L(80,104,210,102), L(80,122,210,120)], m:[]}),
+  G:()=>({nd:[R(138,172,104,66,22), fistCreases(138,172,104,66)], d:[R(138,104,104,66,22), fistCreases(138,104,104,66)], m:[]}),
+  H:()=>({nd:[R(184,118,66,176,32), L(152,176,118,140)], d:[R(132,170,150,48,24,-14)], m:[mv("M60 214 C120 200 170 160 214 70")]}),
+  J:()=>({nd:ndOpen(), d:point(146,206,196), m:[mv("M172 76 L174 182 Q174 210 150 206"), dot(TIP.I[0],TIP.I[1])]}),
+  K:()=>({nd:[R(188,198,56,50,18), L(182,176,182,70), fistCreases(188,198,56,50)], d:[R(66,108,48,42,15), P("M90 104 L146 98 Q170 96 166 128")], m:[dot(172,100)]}),
+  L:()=>({nd:ndOpen(), d:[R(58,178,46,40,15), L(80,176,184,176)], m:[dot(184,176)]}),
+  M:()=>({nd:ndOpen(), d:[R(58,178,46,80,16), L(80,153,184,153), L(80,178,186,178), L(80,203,182,203)], m:[]}),
+  N:()=>({nd:ndOpen(), d:[R(58,178,46,56,16), L(80,166,184,166), L(80,188,184,188)], m:[]}),
+  P:()=>({nd:[R(178,206,56,48,18), L(172,184,172,96), fistCreases(178,206,56,48)], d:[R(98,74,46,44,15), O(152,82,22)], m:[]}),
+  Q:()=>({nd:[R(202,198,54,48,18), L(188,184,124,124), fistCreases(202,198,54,48)], d:[R(56,92,46,52,16), O(108,104,30)], m:[dot(124,126)]}),
+  R:()=>({nd:ndOpen(), d:[R(58,176,46,40,15), P("M80 174 L148 166 Q172 162 172 188")], m:[dot(172,190)]}),
+  S:()=>({nd:[R(190,150,64,56,20), fistCreases(190,150,64,56), P("M164 166 L126 166 Q108 166 110 142")], d:[R(70,96,64,56,20), fistCreases(70,96,64,56), P("M94 112 L118 114 Q142 116 140 140")], m:[]}),
+  T:()=>({nd:[R(150,104,186,50,25), L(176,80,140,62)], d:point(214,129,90), m:[dot(214,129)]}),
+  V:()=>({nd:ndOpen(), d:[R(58,180,46,44,15), L(80,172,188,148), L(80,188,188,206)], m:[dot(188,148),dot(188,206)]}),
+  W:()=>({nd:[R(214,140,46,140,20), L(196,100,76,100), L(196,132,72,132), L(196,164,72,164), L(196,196,80,196)], d:[R(46,140,46,140,20), L(64,84,186,84), L(64,116,190,116), L(64,148,190,148), L(64,180,182,180)], m:[]}),
+  X:()=>({nd:[R(204,204,52,46,16), L(192,188,96,92)], d:[R(56,204,52,46,16), L(68,188,164,92)], m:[]}),
+  Y:()=>({nd:[R(178,144,58,54,18), L(154,130,112,74), L(180,120,188,54)], d:point(160,122,92), m:[dot(160,122)]}),
+  Z:()=>({nd:ndOpen(), d:[R(64,178,48,70,16), P("M86 152 L132 150 Q150 150 152 162",12), P("M86 168 L134 166 Q152 166 154 178",12), P("M86 184 L134 182 Q152 182 154 194",12), P("M86 200 L130 198 Q148 198 150 210",12)], m:[dot(153,164),dot(155,180),dot(155,196),dot(151,212)]})
+};
+
+/* numbers: one hand (drawn in the dominant colour) */
+const NF = { // [base, tip] for each finger, viewer's view of right hand, palm toward signer
+  i:[[106,150],[98,70]], m:[[126,146],[126,58]], r:[[146,148],[154,66]], l:[[164,156],[180,94]]
+};
+function numUp(fingers, thumb){
+  const d=[R(134,180,86,76,26)];
+  for(const k of ["i","m","r","l"]){
+    const [b,t]=NF[k];
+    if(fingers.includes(k)) d.push(L(b[0],b[1],t[0],t[1]));
+    else d.push(L(b[0],b[1]+2,b[0],b[1]-10,14));
+  }
+  if(thumb) d.push(L(104,192,60,152));
+  return d;
+}
+function numSide(count){ // fist turned sideways, thumb up, fingers out to the side
+  const d=[R(138,178,68,86,24), P("M124 140 Q118 104 126 70")];
+  const ys=[150,174,198];
+  for(let i=0;i<count;i++) d.push(L(166,ys[i],236,ys[i]+(i-1)*4));
+  return d;
+}
+const NUM = {
+  0:()=>({d:[R(150,186,70,56,22), O(124,112,36,18)], m:[]}),
+  1:()=>({d:numUp(["i"],false), m:[]}),
+  2:()=>({d:numUp(["i","m"],false), m:[]}),
+  3:()=>({d:numUp(["i","m","r"],false), m:[]}),
+  4:()=>({d:numUp(["i","m","r","l"],false), m:[]}),
+  5:()=>({d:numUp(["i","m","r","l"],true), m:[]}),
+  6:()=>({d:[R(134,176,86,74,26), fistCreases(134,176,86,74), P("M98 156 Q80 116 98 84")], m:[]}),
+  7:()=>({d:numSide(1), m:[]}),
+  8:()=>({d:numSide(2), m:[]}),
+  9:()=>({d:numSide(3), m:[]}),
+  10:()=>({d:numUp(["i","m","r","l"],true), m:[mv("M74 46 Q60 30 70 16"), mv("M200 70 Q220 60 228 42"), mv("M44 132 Q24 128 16 112")]})
+};
+
+let svgId = 0;
+function render(spec, label, opts={}){
+  const id = "s"+(++svgId);
+  const nd = spec.nd||[], d = spec.d||[], m = spec.m||[];
+  const shape = (e, cls, add)=>{
+    if(e.t==="p") return `<path class="ln ${cls}" d="${e.d}" stroke-width="${e.w+add}"/>`;
+    if(e.t==="c") return `<circle class="ln ${cls}" cx="${e.cx}" cy="${e.cy}" r="${e.r}" stroke-width="${e.w+add}"/>`;
+    if(e.t==="r"){
+      const tr = e.rot ? ` transform="rotate(${e.rot} ${e.cx} ${e.cy})"` : "";
+      return `<rect class="sh ${cls}" x="${r1(e.cx-e.w/2)}" y="${r1(e.cy-e.h/2)}" width="${e.w}" height="${e.h}" rx="${e.rx}" stroke-width="${add}"${tr}/>`;
+    }
+    return "";
+  };
+  const pass = (arr, cls, add)=>arr.filter(e=>e.t!=="x").map(e=>shape(e,cls,add)).join("");
+  const creases = (arr, cls)=>arr.filter(e=>e.t==="x").map(e=>`<path class="${cls}" d="${e.d}"/>`).join("");
+  let body = "";
+  body += pass(nd,"ndo",6) + pass(nd,"ndf",0) + creases(nd,"cr-nd");
+  if(nd.length) body += pass(d,"dh",14);
+  body += pass(d,"do",6) + pass(d,"df",0) + creases(d,"cr-d");
+  for(const k of m){
+    if(k.t==="dot") body += `<circle class="dot" cx="${k.x}" cy="${k.y}" r="7.5"/>`;
+    if(k.t==="mv") body += `<path class="mv" d="${k.d}" marker-end="url(#${id}h)"/>`;
+  }
+  const flip = state.hand==="left" ? ` transform="translate(260 0) scale(-1 1)"` : "";
+  return `<svg class="hand" viewBox="0 -20 260 262" role="img" aria-label="${esc(label)}"${opts.cls?` data-k="${opts.cls}"`:""}>
+    <defs><marker id="${id}h" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path class="mvh" d="M0 0L10 5L0 10z"/></marker></defs>
+    <g${flip}>${body}</g></svg>`;
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+const letterSVG = (ch, extra="")=>render(LETTER[ch](), `Auslan letter ${ch}. ${LETTER_INFO[ch].how}${extra}`);
+const numberSVG = (n)=>render(NUM[n](), `Auslan number ${n}. ${NUM_INFO[n].how}`);
+
+/* ---------- content ---------- */
+const LETTER_INFO = {
+  A:{how:"Touch the tip of your other thumb with your dominant index finger.", tip:"The five vowels sit on the five fingertips of your other hand, thumb first."},
+  B:{how:"Make a ring with the thumb and index finger of each hand, then join the two rings at the fingertips.", tip:"Two round bumps, like a lowercase b lying on its side."},
+  C:{how:"One hand only. Curve your dominant thumb and index finger into a C, with the little-finger side facing out.", tip:"C is the only one-handed letter in the alphabet."},
+  D:{how:"Hold your other index finger upright. Curve your dominant thumb and index finger and join them to it, thumb at the bottom and fingertip at the top.", tip:"The straight finger and the curve make a D. To someone watching a right-handed signer it looks back to front, which is normal."},
+  E:{how:"Touch the tip of your other index finger with your dominant index finger.", tip:"Second fingertip, second vowel."},
+  F:{how:"Hold out the index and middle fingers of both hands, held together. Lay your dominant pair across the top of the other pair.", tip:"Some signers tap the fingers together once or twice."},
+  G:{how:"Make two fists and stack them, dominant fist on top, touching.", tip:"A fist on a fist."},
+  H:{how:"Hold both hands flat. Slide the palm and fingers of your dominant hand along your other hand.", tip:"A brushing movement, not a clap."},
+  I:{how:"Touch the tip of your other middle finger with your dominant index finger.", tip:"Middle fingertip, middle vowel."},
+  J:{how:"With your dominant index finger, draw a J on your other palm. Start at the middle fingertip, where I is, and hook down the palm.", tip:"J starts as an I and keeps moving."},
+  K:{how:"Hold your other index finger upright. Curve your dominant index finger and tap its knuckle against the upright finger.", tip:"The bent finger forms the arms of the K."},
+  L:{how:"Lay your dominant index finger across the palm of your other hand.", tip:"One finger on the palm is L, two is N, three is M."},
+  M:{how:"Lay your dominant index, middle and ring fingers on the palm of your other hand.", tip:"Three fingers, like the three legs of a lowercase m."},
+  N:{how:"Lay your dominant index and middle fingers on the palm of your other hand.", tip:"Two fingers, like the two legs of a lowercase n."},
+  O:{how:"Touch the tip of your other ring finger with your dominant index finger.", tip:"Fourth fingertip, fourth vowel."},
+  P:{how:"Hold your other index finger upright. Make a ring with your dominant thumb and index finger at its tip.", tip:"A loop on top of a stick."},
+  Q:{how:"Make a ring with the thumb and index finger of one hand. Push the other index finger down through the ring so it rests on the thumb.", tip:"The finger through the ring is the tail of the Q."},
+  R:{how:"Bend your dominant index finger into a hook and rest it on the palm of your other hand.", tip:"Like L, but with the finger bent."},
+  S:{how:"Make fists with both little fingers out, then hook the little fingers together.", tip:"Like a pinky promise."},
+  T:{how:"Hold your other hand flat and level, palm facing forward. Tap your dominant index fingertip on its little-finger edge, near the wrist.", tip:"The pointing finger meets the edge of the flat hand to make the T."},
+  U:{how:"Touch the tip of your other little finger with your dominant index finger.", tip:"Last fingertip, last vowel."},
+  V:{how:"Make a V with your dominant index and middle fingers and place it on the palm of your other hand.", tip:"Spread the fingers so the V is clear."},
+  W:{how:"Spread the fingers of both hands and thread them between each other.", tip:"Interlocked fingers, like a woven basket."},
+  X:{how:"Cross your two index fingers.", tip:"An X made of fingers."},
+  Y:{how:"Hold your other thumb and index finger up and apart. Rest your dominant index fingertip in the gap between them.", tip:"The V of your other hand plus the stem from your dominant finger make the Y."},
+  Z:{how:"Bend the fingers of your dominant hand and place the fingertips on the palm of your other hand.", tip:"Some signers move the bent hand forward slightly."}
+};
+const NUM_INFO = {
+  0:{how:"Bring your fingers and thumb together into a circle.", tip:"Shaped like the letter O."},
+  1:{how:"Raise your index finger from a fist, palm facing you."},
+  2:{how:"Raise your index and middle fingers, slightly apart, palm facing you."},
+  3:{how:"Raise your index, middle and ring fingers, palm facing you. Your thumb stays tucked.", tip:"Different from American Sign Language, which uses the thumb for three."},
+  4:{how:"Raise all four fingers, slightly apart, with your thumb tucked in. Palm faces you."},
+  5:{how:"Spread all your fingers and your thumb, palm facing you."},
+  6:{how:"Raise a slightly curved thumb from your fist.", tip:"Six is the thumb on its own."},
+  7:{how:"Turn your fist sideways with the thumb up, and point your index finger out to the side.", tip:"Thumb plus one finger. It makes an L shape."},
+  8:{how:"Thumb up, with your index and middle fingers pointing out to the side, slightly apart.", tip:"Thumb plus two fingers."},
+  9:{how:"Thumb up, with every finger except the little finger pointing out to the side.", tip:"Thumb plus three fingers."},
+  10:{how:"Start with a fist, palm facing away from you, and spread your fingers open twice.", tip:"Ten has regional variants; check Signbank for the one used near you."}
+};
+
+const CATS = [
+  {id:"greet", name:"Greetings", note:""},
+  {id:"basic", name:"Everyday replies", note:""},
+  {id:"q", name:"Questions", note:"Questions like what, where and who usually come with furrowed brows. Your face carries part of the meaning."},
+  {id:"people", name:"People and family", note:""},
+  {id:"daily", name:"Daily life", note:""},
+  {id:"feel", name:"Feelings", note:"Let your face show the feeling. A flat face makes the sign look unsure."}
+];
+const SIGNS = [
+  ["hello","greet",468,"Wave a flat hand a few times.",""],
+  ["goodbye","greet",456,"Start with a flat hand above your shoulder, fingers up. Fold the fingers down towards your palm and back up again.","A small wave, folding at the knuckles."],
+  ["how are you","greet",477,"Put the fingertips of a flat hand on your chest, then pull the hand forward into a thumbs-up.","Use both hands for extra warmth."],
+  ["good","greet",455,"Make a fist with your thumb pointing up.","The familiar thumbs-up. It also means fine or great."],
+  ["morning","greet",533,"Bend your fingers and tap them at your waist, then on your chest near your armpit.","Morning is a well-known regional variant; check Signbank for your state."],
+  ["meet","greet",899,"Point both index fingers up, palms facing each other, and tap the knuckles together.","Pleased to meet you: sign MEET with a smile."],
+  ["name","greet",539,"Bend your index and middle fingers to touch your thumb. Start with the fingertips at your forehead and move forward in an arc, turning the wrist so the fingers end up pointing forward.","Ask a name with NAME YOU WHAT, with furrowed brows."],
+  ["my","greet",537,"Place a fist on your chest, palm in.",""],
+  ["I / me","greet",1599,"Point to your chest.",""],
+  ["you","greet",738,"Point towards the person.","Pointing isn't rude in Auslan; it's how pronouns work."],
+
+  ["please","basic",585,"Start with a flat hand, fingertips touching your chin. Move the hand forward while curling the fingers into your palm.",""],
+  ["thank you","basic",742,"Move a flat hand, fingers up and palm towards you, forward from your chin in a slight arc.","The most useful sign you'll learn."],
+  ["sorry","basic",641,"Shake a clawed hand, palm towards you, across your mouth twice.","Watch the video: sorry has several variants."],
+  ["yes","basic",735,"Hold a fist palm down and nod it up and down at the wrist.","Nod your head at the same time."],
+  ["no","basic",1595,"Hold a fist palm down and shake it side to side at the wrist, twice.","Shake your head at the same time."],
+  ["okay","basic",176,"Hold your thumb out sideways from a fist and move the hand forward in a small circle.","Also means all right or fine."],
+  ["finish","basic",436,"Hold up a thumbs-up and tilt it side to side at the wrist.","Means done or complete."],
+  ["again","basic",302,"Point your index and middle fingers forward, apart. Arc the hand up and down twice, keeping the wrist still.","Also used for pardon? or repeat, please."],
+  ["wait","basic",706,"Hold a flat hand with the fingers pointing forward and slightly up, and slowly bounce it downwards twice.","Also means hold on or slow down."],
+  ["help","basic",469,"Rest one cupped hand on the other, palms together, and move both hands forward.",""],
+
+  ["what","q",715,"Point your index finger up, palm forward, and shake it side to side, keeping your wrist still.",""],
+  ["where","q",719,"Hold flat hands out at your sides, palms up, and move them slightly left and right.","Can be done with one hand."],
+  ["who","q",722,"Point up and move your hand in a small horizontal circle.",""],
+  ["when","q",718,"With your fingers spread and pointing up, tap them on your cheek one after another.",""],
+  ["why","q",723,"Hold your index finger out sideways and your thumb up. Stroke your thumb down your chest twice.",""],
+  ["how","q",748,"Slide one flat hand along the other, as in the letter H, and flow straight into interlaced fingers, as in W.","Both hands are often held palm up for the first part."],
+
+  ["family","people",90,"Hold out the index and middle fingers of both hands, touching. Move the hands outwards in a circle until they meet again.","Traces the circle of a group starting with F."],
+  ["mother","people",534,"Tap your index, middle and ring fingers on your other palm, twice.","It's the letter M, twice."],
+  ["father","people",432,"Tap the index and middle fingers of both hands together, twice.","It's the letter F, twice."],
+  ["brother","people",352,"Put your fists together, then rub them past each other, one moving up as the other moves down.",""],
+  ["sister","people",630,"Hook your index finger and tap your nose twice.",""],
+  ["friend","people",445,"Hold one fist in your other hand and bounce both hands down twice.",""],
+  ["baby","people",310,"Hold your arms as if cradling a baby and rock them gently.",""],
+  ["deaf","people",404,"Touch your ear with your index and middle fingers held together.",""],
+  ["hearing","people",1345,"Put your index fingertip to your ear, then move it in an arc to the corner of your mouth.","Used for a hearing person."],
+
+  ["eat","daily",425,"Touch your thumb to your fingertips and move the hand towards your mouth twice.","The same sign is used for food."],
+  ["drink","daily",420,"Cup your hand as if holding a cup and move it up to your mouth.",""],
+  ["water","daily",283,"Stroke the edge of a curved index finger down your cheek twice, palm forward.",""],
+  ["toilet","daily",687,"Hold one hand flat, palm towards your chest, and tap its edge with your other index fingertip, twice.","Built on the letter T."],
+  ["home","daily",472,"With your palm facing forward and fingers curved forward, move the hand forward in an arch.",""],
+  ["school","daily",617,"Hold a flat hand, palm towards your face and fingers up. Move it across in front of your face, twice.",""],
+  ["work","daily",728,"Hold both hands flat at right angles to each other, palms towards you, and tap the wrists together twice.",""],
+  ["learn","daily",874,"Point both index fingers forward, side by side and touching. Slide one back as the other goes forward, then reverse.","Also used for practise."],
+  ["understand","daily",701,"Point your index finger to your temple, palm forward. Move it forward while turning the hand so the palm ends facing you.",""],
+
+  ["happy","feel",461,"Brush the palms of your flat hands together in small circles.",""],
+  ["sad","feel",608,"Hold a flat hand upright in front of your nose and mouth, thumb tucked, then move it in a small arc in front of your face.",""],
+  ["tired","feel",255,"Put the fingertips of a bent hand at the side of your chest, then drop the wrist so the palm ends facing up.",""],
+  ["love","feel",884,"Cross your flat hands over your heart, palms on your chest.",""]
+].map(([w,cat,sp,how,tip])=>({w,cat,sp,how,tip}));
+
+const WORDS = ["CAT","DOG","SUN","BUS","TEA","MILK","BREAD","BEACH","KOALA","WOMBAT","EMU","PERTH","HOBART","DARWIN","CAIRNS","SYDNEY","BRISBANE","ADELAIDE","CANBERRA","MELBOURNE","FRIEND","FAMILY","SCHOOL","WATER","COFFEE","PIZZA","JUMP","QUIZ","VAN","FOX","BOX","YES","ZOO","JAM","KIWI","WAVE"];
+
+const signbank = w=>"https://auslan.org.au/dictionary/search/?query="+encodeURIComponent(w.replace(/ \/.*$/,"").replace(/^I$/,"me"));
+const signplanet = id=>"https://signplanet.net/sign/"+id;
+const AZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+/* ---------- helpers ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+/* ---------- fingerspelling player ---------- */
+function makePlayer(host, opt={}){
+  const speeds = {Slow:1400, Medium:900, Fast:520};
+  let seq=[], i=0, timer=null, playing=false, speed=opt.speed||"Medium", hide=!!opt.hide;
+  host.innerHTML = `
+    ${opt.input!==false ? `<div class="spell-input"><label class="sr" for="${opt.id}-in">Word to fingerspell</label><input id="${opt.id}-in" maxlength="40" placeholder="${opt.placeholder||"Type your name"}" value="${opt.value||""}" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="btn primary" type="button" data-act="play">Play</button></div>` : ""}
+    <div class="stage" aria-live="off"><div class="big"></div><div class="fig"></div></div>
+    <div class="strip" role="group" aria-label="Letters"></div>
+    <div class="controls">
+      ${opt.input===false ? `<button class="btn primary" type="button" data-act="play">Play</button>` : ""}
+      <button class="btn small" type="button" data-act="prev" aria-label="Previous letter">Back</button>
+      <button class="btn small" type="button" data-act="next" aria-label="Next letter">Next</button>
+      <div class="seg" role="group" aria-label="Speed">${Object.keys(speeds).map(s=>`<button type="button" data-speed="${s}" aria-pressed="${s===speed}">${s}</button>`).join("")}</div>
+      ${opt.hideToggle!==false ? `<label class="check"><input type="checkbox" data-act="hide" ${hide?"checked":""}> Hide letters</label>` : ""}
+    </div>
+    ${opt.input!==false ? `<p class="note" data-msg></p>` : ""}`;
+  const input = $("input:not([type=checkbox])",host), stage=$(".stage",host), fig=$(".fig",host), big=$(".big",host), strip=$(".strip",host), playBtn=$('[data-act="play"]',host), msg=$("[data-msg]",host);
+
+  function setText(t){
+    const up = (t||"").toUpperCase();
+    const dropped = up.replace(/[A-Z ]/g,"");
+    seq = up.replace(/[^A-Z ]/g,"").replace(/\s+/g," ").trim().split("");
+    if(msg) msg.textContent = dropped.trim() ? "Only the letters A to Z are fingerspelled, so other characters are skipped." : "";
+    i=0; stop(); drawStrip(); show();
+  }
+  function drawStrip(){
+    strip.innerHTML = seq.map((c,k)=> c===" " ? `<button type="button" class="gap" tabindex="-1" aria-hidden="true"></button>` : `<button type="button" data-k="${k}" aria-label="Letter ${k+1}${hide?"":": "+c}">${c}</button>`).join("");
+    strip.classList.toggle("hidden", hide);
+  }
+  function show(anim){
+    const c = seq[i];
+    $$("button",strip).forEach((b,k)=>b.classList.toggle("on",k===i));
+    const on = $("button.on",strip); if(on && on.scrollIntoView) on.scrollIntoView({block:"nearest",inline:"center",behavior:reduceMotion?"auto":"smooth"});
+    if(!c){ fig.innerHTML = render({nd:ndOpen(),d:[],m:[]},"Your other hand, open"); big.textContent=""; return; }
+    if(c===" "){ fig.style.opacity=.25; big.textContent=""; return; }
+    fig.style.opacity=1;
+    fig.innerHTML = letterSVG(c);
+    big.textContent = c; big.classList.toggle("hide",hide);
+    if(anim && !reduceMotion){ stage.classList.remove("flash"); void stage.offsetWidth; stage.classList.add("flash"); }
+    if(!state.seen.has(c) && !opt.noSeen){ state.seen.add(c); saveSeen(); refreshProgress(); }
+  }
+  function tick(){
+    if(i < seq.length-1){
+      // repeated letters: brief blank so the repeat is visible
+      if(seq[i+1]===seq[i]){ fig.style.opacity=.2; setTimeout(()=>{ i++; show(true); },160); }
+      else { i++; show(true); }
+      timer = setTimeout(tick, speeds[speed]);
+    } else { stop(); if(opt.onEnd) opt.onEnd(); }
+  }
+  function play(){
+    if(input && input.value.trim().toUpperCase().replace(/[^A-Z ]/g,"").replace(/\s+/g," ").trim()!==seq.join("")) setText(input.value);
+    if(!seq.length){ if(input) input.focus(); return; }
+    stop(); i=0; show(true); playing=true; playBtn.textContent="Stop";
+    timer=setTimeout(tick, speeds[speed]);
+  }
+  function stop(){ clearTimeout(timer); timer=null; playing=false; if(playBtn) playBtn.textContent = opt.playLabel||"Play"; }
+  host.addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b) return;
+    const act=b.dataset.act;
+    if(act==="play"){ playing ? stop() : play(); }
+    else if(act==="prev"){ stop(); if(i>0){ i--; show(true);} }
+    else if(act==="next"){ stop(); if(i<seq.length-1){ i++; show(true);} }
+    else if(b.dataset.speed){ speed=b.dataset.speed; $$("[data-speed]",host).forEach(x=>x.setAttribute("aria-pressed",x===b)); }
+    else if(b.dataset.k!==undefined){ stop(); i=+b.dataset.k; show(true); }
+  });
+  host.addEventListener("change",e=>{ if(e.target.dataset.act==="hide"){ hide=e.target.checked; drawStrip(); show(); } });
+  if(input){
+    input.addEventListener("input",()=>setText(input.value));
+    input.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); play(); } });
+  }
+  setText(opt.value||"");
+  return { setText, play, stop, redraw(){ show(); }, setHide(h){ hide=h; drawStrip(); show(); } };
+}
+
+/* ---------- views ---------- */
+let homePlayer;
+function buildHome(){
+  $$("[data-count]").forEach(e=>e.textContent=SIGNS.length);
+  homePlayer = makePlayer($("#speller"), {id:"home", value:"Auslan", placeholder:"Type your name"});
+  refreshProgress();
+}
+function refreshProgress(){
+  const el=$("#progress"); if(!el) return;
+  el.innerHTML = `<div><b>${state.seen.size}/26</b><small>letters opened</small></div><div><b>${state.known.size}/${SIGNS.length}</b><small>signs you know</small></div><div><b>${state.best}</b><small>best quiz streak</small></div>`;
+}
+
+function buildAlphabet(){
+  // vowels
+  const keys=$("#vowel-keys"), fig=$("#vowel-fig"), say=$("#vowel-say");
+  keys.innerHTML = "AEIOU".split("").map(v=>`<button type="button" data-v="${v}" aria-pressed="false">${v}</button>`).join("");
+  const showV = v=>{
+    $$("button",keys).forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));
+    fig.innerHTML = letterSVG(v);
+    say.textContent = `${v}: ${LETTER_INFO[v].how}`;
+  };
+  keys.addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) showV(b.dataset.v); });
+  showV("A");
+  drawAlphaTiles();
+  $("#alpha-tiles").addEventListener("click",e=>{ const t=e.target.closest(".tile"); if(t) openLetter(t.dataset.l); });
+}
+function drawAlphaTiles(){
+  $("#alpha-tiles").innerHTML = AZ.map(c=>`<button type="button" class="tile${state.seen.has(c)?" seen":""}" data-l="${c}" aria-label="Letter ${c}${state.seen.has(c)?", opened":""}"><span class="lt">${c}</span>${render(LETTER[c](),"")}</button>`).join("");
+}
+let sheetReturn=null;
+function openSheet(html){
+  sheetReturn=document.activeElement;
+  $("#sheet").innerHTML=html; $("#scrim").classList.add("on");
+  document.body.style.overflow="hidden";
+  const x=$("#sheet .x"); if(x) x.focus();
+}
+function closeSheet(){
+  $("#scrim").classList.remove("on"); document.body.style.overflow="";
+  if(sheetReturn && sheetReturn.focus) sheetReturn.focus();
+}
+function openLetter(c){
+  const k=AZ.indexOf(c), prev=AZ[(k+25)%26], next=AZ[(k+1)%26], info=LETTER_INFO[c];
+  if(!state.seen.has(c)){ state.seen.add(c); saveSeen(); refreshProgress(); }
+  openSheet(`
+    <div class="sheet-top"><h2 id="sheet-title" class="sr">Letter ${c}</h2><span class="muted">${k+1} of 26</span><button class="btn small x" type="button" data-close>Close</button></div>
+    <div class="sheet-body">
+      <div>${letterSVG(c)}</div>
+      <div>
+        <div class="bigl" aria-hidden="true">${c}</div>
+        <p class="how">${info.how}</p>
+        <p class="tip">${info.tip}</p>
+        <div class="sheet-nav">
+          <button class="btn small" type="button" data-go="${prev}">Previous: ${prev}</button>
+          <button class="btn small" type="button" data-go="${next}">Next: ${next}</button>
+        </div>
+      </div>
+    </div>`);
+  drawAlphaTiles();
+}
+function openNumber(n){
+  const info=NUM_INFO[n];
+  openSheet(`
+    <div class="sheet-top"><h2 id="sheet-title" class="sr">Number ${n}</h2><span class="muted">Numbers</span><button class="btn small x" type="button" data-close>Close</button></div>
+    <div class="sheet-body">
+      <div>${numberSVG(n)}</div>
+      <div>
+        <div class="bigl" aria-hidden="true">${n}</div>
+        <p class="how">${info.how}</p>
+        ${info.tip?`<p class="tip">${info.tip}</p>`:""}
+        <div class="sheet-nav">
+          ${n>0?`<button class="btn small" type="button" data-gon="${n-1}">Previous: ${n-1}</button>`:""}
+          ${n<10?`<button class="btn small" type="button" data-gon="${n+1}">Next: ${n+1}</button>`:""}
+        </div>
+      </div>
+    </div>`);
+}
+function buildNumbers(){
+  $("#pattern-row").innerHTML = [6,7,8,9].map(n=>`<figure>${numberSVG(n)}<figcaption>${n}</figcaption></figure>`).join("");
+  $("#num-tiles").innerHTML = Array.from({length:11},(_,n)=>`<button type="button" class="tile" data-n="${n}" aria-label="Number ${n}"><span class="lt">${n}</span>${render(NUM[n](),"")}</button>`).join("");
+  $("#num-tiles").addEventListener("click",e=>{ const t=e.target.closest(".tile"); if(t) openNumber(+t.dataset.n); });
+}
+
+let signCat="all";
+function buildSigns(){
+  $("#sign-chips").innerHTML = [`<button type="button" data-c="all" aria-pressed="true">All</button>`].concat(CATS.map(c=>`<button type="button" data-c="${c.id}" aria-pressed="false">${c.name}</button>`)).concat([`<button type="button" data-c="known" aria-pressed="false">I know these</button>`]).join("");
+  $("#sign-chips").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; signCat=b.dataset.c; $$("#sign-chips button").forEach(x=>x.setAttribute("aria-pressed",x===b)); drawSigns(); });
+  $("#sign-q").addEventListener("input",drawSigns);
+  $("#sign-list").addEventListener("click",e=>{
+    const b=e.target.closest(".know"); if(!b) return;
+    const w=b.dataset.w; if(state.known.has(w)) state.known.delete(w); else state.known.add(w);
+    saveKnown(); b.setAttribute("aria-pressed",state.known.has(w)); b.textContent=state.known.has(w)?"Known":"I know this"; refreshProgress();
+  });
+  drawSigns();
+}
+function drawSigns(){
+  const q=$("#sign-q").value.trim().toLowerCase();
+  const match = s=>(!q || s.w.toLowerCase().includes(q) || s.how.toLowerCase().includes(q)) && (signCat==="all" || (signCat==="known" ? state.known.has(s.w) : s.cat===signCat));
+  let html="";
+  for(const c of CATS){
+    const list=SIGNS.filter(s=>s.cat===c.id && match(s));
+    if(!list.length) continue;
+    html += `<section class="cat"><h2>${c.name} <small>${list.length} sign${list.length>1?"s":""}</small></h2>${c.note?`<p class="cat-note">${c.note}</p>`:""}<ul class="signs">`+
+      list.map(s=>`<li class="sign"><h3>${s.w}</h3><button type="button" class="know" data-w="${esc(s.w)}" aria-pressed="${state.known.has(s.w)}">${state.known.has(s.w)?"Known":"I know this"}</button><p class="how">${s.how}</p>${s.tip?`<p class="tipline">${s.tip}</p>`:""}<div class="links"><a href="${signbank(s.w)}" target="_blank" rel="noopener">Watch on Auslan Signbank</a><a href="${signplanet(s.sp)}" target="_blank" rel="noopener">Sign Planet entry</a></div></li>`).join("")+`</ul></section>`;
+  }
+  $("#sign-list").innerHTML = html || `<p class="empty">${signCat==="known"?"Mark signs as known and they'll collect here.":"No signs match that search. Try a shorter word, or fingerspell it instead."}</p>`;
+}
+
+/* ---------- practise ---------- */
+const MODES = [
+  {id:"letters", name:"Letters"},
+  {id:"read", name:"Read words"},
+  {id:"numbers", name:"Numbers"},
+  {id:"signs", name:"Sign meanings"},
+  {id:"cards", name:"Flashcards"}
+];
+let mode="letters", streak=0, score=0, tries=0;
+function buildPractise(){
+  $("#modes").innerHTML = MODES.map(m=>`<button type="button" data-m="${m.id}" aria-pressed="${m.id===mode}">${m.name}</button>`).join("");
+  $("#modes").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; if(readPlayer) readPlayer.stop(); mode=b.dataset.m; $$("#modes button").forEach(x=>x.setAttribute("aria-pressed",x===b)); streak=0; score=0; tries=0; nextDrill(); });
+  nextDrill();
+}
+function scoreLine(){ return `<div class="score"><span>Score <b>${score}/${tries}</b></span><span>Streak <b>${streak}</b></span><span>Best <b>${state.best}</b></span></div>`; }
+function mark(ok){
+  tries++; if(ok){ score++; streak++; if(streak>state.best){ state.best=streak; store.set("best",state.best); refreshProgress(); } } else streak=0;
+}
+let lastItem=null;
+function choiceDrill({fig, question, answer, options, explain}){
+  const opts = shuffle(options);
+  $("#drill").innerHTML = `<div class="drill"><div>${fig}</div><div>
+    <p class="q">${question}</p>
+    <div class="opts">${opts.map(o=>`<button type="button" data-o="${esc(o)}">${o}</button>`).join("")}</div>
+    <p class="feedback" aria-live="polite"></p>
+    <div class="controls" style="margin:8px 0 14px"><button class="btn" type="button" data-next>Skip</button></div>
+    ${scoreLine()}</div></div>`;
+  const box=$("#drill");
+  box.onclick = e=>{
+    const b=e.target.closest("button"); if(!b) return;
+    if(b.hasAttribute("data-next")){ nextDrill(); return; }
+    if(b.dataset.o===undefined) return;
+    const ok = b.dataset.o===String(answer);
+    mark(ok);
+    $$(".opts button",box).forEach(x=>{ x.disabled=true; if(x.dataset.o===String(answer)) x.classList.add("right"); });
+    if(!ok) b.classList.add("wrong");
+    const fb=$(".feedback",box); fb.className="feedback "+(ok?"ok":"no");
+    fb.textContent = ok ? "Correct." : `It's ${answer}. ${explain||""}`;
+    $("[data-next]",box).textContent="Next";
+    $(".score",box).outerHTML = scoreLine();
+    if(ok) setTimeout(()=>{ if($("[data-next]",box)) nextDrill(); }, 900);
+  };
+}
+function nextDrill(){
+  const box=$("#drill"); box.onclick=null;
+  if(mode==="letters"){
+    let c; do{ c=pick(AZ); }while(c===lastItem); lastItem=c;
+    const others=shuffle(AZ.filter(x=>x!==c)).slice(0,3);
+    choiceDrill({fig:render(LETTER[c](),"A fingerspelled letter. Which one?"), question:"Which letter is this?", answer:c, options:[c,...others], explain:LETTER_INFO[c].how});
+  } else if(mode==="numbers"){
+    let n; do{ n=Math.floor(Math.random()*11); }while(n===lastItem); lastItem=n;
+    const pool=shuffle([...Array(11).keys()].filter(x=>x!==n)).slice(0,3);
+    choiceDrill({fig:render(NUM[n](),"A number sign. Which one?"), question:"Which number is this?", answer:n, options:[n,...pool].map(String), explain:NUM_INFO[n].how});
+  } else if(mode==="signs"){
+    let s; do{ s=pick(SIGNS); }while(s===lastItem); lastItem=s;
+    const same=shuffle(SIGNS.filter(x=>x!==s && x.cat===s.cat)), rest=shuffle(SIGNS.filter(x=>x!==s && x.cat!==s.cat));
+    const others=same.slice(0,2).concat(rest).slice(0,3).map(x=>x.w);
+    choiceDrill({fig:`<p class="prompt-text">${s.how}</p>`, question:"Which sign does this describe?", answer:s.w, options:[s.w,...others], explain:""});
+  } else if(mode==="read"){ readDrill(); }
+  else if(mode==="cards"){ cardDrill(); }
+}
+let readPlayer=null;
+function readDrill(){
+  let w; do{ w=pick(WORDS); }while(w===lastItem); lastItem=w;
+  $("#drill").innerHTML = `<div class="drill"><div id="read-player"></div><div>
+    <p class="q">Watch the word, then type what was spelled.</p>
+    <form class="answer" id="read-form"><label class="sr" for="read-in">Your answer</label><input id="read-in" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Your answer"><button class="btn primary" type="submit">Check</button></form>
+    <p class="feedback" aria-live="polite"></p>
+    <div class="controls" style="margin:8px 0 14px"><button class="btn" type="button" data-skip>New word</button><button class="btn" type="button" data-reveal>Show letters</button></div>
+    ${scoreLine()}</div></div>`;
+  readPlayer = makePlayer($("#read-player"),{id:"read", input:false, hide:true, hideToggle:false, value:w, noSeen:true, playLabel:"Play word"});
+  const box=$("#drill"); let done=false;
+  $("#read-form").addEventListener("submit",e=>{
+    e.preventDefault(); if(done){ readDrill(); return; }
+    const v=$("#read-in").value.trim().toUpperCase().replace(/[^A-Z]/g,"");
+    if(!v) return;
+    const ok = v===w; mark(ok); done=true;
+    const fb=$(".feedback",box); fb.className="feedback "+(ok?"ok":"no"); fb.textContent = ok?`Correct: ${w}.`:`It was ${w}.`;
+    readPlayer.setHide(false);
+    $(".score",box).outerHTML=scoreLine();
+    $('#read-form button').textContent="Next word";
+  });
+  box.onclick = e=>{
+    if(e.target.closest("[data-skip]")){ readPlayer.stop(); readDrill(); }
+    else if(e.target.closest("[data-reveal]")) readPlayer.setHide(false);
+  };
+  setTimeout(()=>readPlayer.play(), 350);
+}
+function cardDrill(){
+  const pool = SIGNS.filter(s=>!state.known.has(s.w));
+  const list = pool.length ? pool : SIGNS;
+  let s; do{ s=pick(list); }while(s===lastItem && list.length>1); lastItem=s;
+  $("#drill").innerHTML = `<div class="drill"><button type="button" class="card" id="card" aria-label="Flashcard: ${esc(s.w)}. Tap to turn over."><div class="card-in">
+      <div class="face"><small>Can you sign it?</small><div class="word">${s.w}</div><small>Tap to see how</small></div>
+      <div class="face back"><small>${s.w}</small><p style="margin:.4rem 0 0;font-size:1.125rem">${s.how}</p></div>
+    </div></button><div>
+    <p class="q">Sign it, then turn the card over to check.</p>
+    <div class="controls"><button class="btn primary" type="button" data-got>Got it</button><button class="btn" type="button" data-again>Not yet</button><a class="btn" href="${signbank(s.w)}" target="_blank" rel="noopener">Watch video</a></div>
+    <p class="note">${pool.length} sign${pool.length===1?"":"s"} left to learn. "Got it" marks a sign as known.</p></div></div>`;
+  const box=$("#drill");
+  $("#card").addEventListener("click",()=>$("#card").classList.toggle("flip"));
+  box.onclick = e=>{
+    if(e.target.closest("[data-got]")){ state.known.add(s.w); saveKnown(); refreshProgress(); cardDrill(); }
+    else if(e.target.closest("[data-again]")) cardDrill();
+  };
+}
+
+/* ---------- routing ---------- */
+const VIEWS=["home","alphabet","numbers","signs","practise","culture"];
+function route(){
+  let v=(location.hash||"#home").slice(1); if(!VIEWS.includes(v)) v="home";
+  VIEWS.forEach(x=>$("#v-"+x).classList.toggle("on",x===v));
+  $$('.nav a, .tabs a').forEach(a=>{ if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  if(v!=="home" && homePlayer) homePlayer.stop();
+  if(v!=="practise" && readPlayer) readPlayer.stop();
+  if(v==="alphabet") drawAlphaTiles();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+
+/* ---------- handedness ---------- */
+function setHand(h){
+  state.hand=h; store.set("hand",h);
+  $$(".hand-toggle button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.hand===h));
+  // redraw everything that holds diagrams
+  const v=$("#vowel-keys button[aria-pressed=true]");
+  $("#vowel-fig").innerHTML = letterSVG(v?v.dataset.v:"A");
+  drawAlphaTiles(); buildNumbersFigures(); if(homePlayer) homePlayer.redraw(); if(readPlayer) readPlayer.redraw();
+  if(mode!=="read" && mode!=="cards" && mode!=="signs") nextDrill();
+}
+function buildNumbersFigures(){
+  $("#pattern-row").innerHTML = [6,7,8,9].map(n=>`<figure>${numberSVG(n)}<figcaption>${n}</figcaption></figure>`).join("");
+  $("#num-tiles").innerHTML = Array.from({length:11},(_,n)=>`<button type="button" class="tile" data-n="${n}" aria-label="Number ${n}"><span class="lt">${n}</span>${render(NUM[n](),"")}</button>`).join("");
+}
+$(".hand-toggle").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) setHand(b.dataset.hand); });
+
+/* ---------- transfer between devices ---------- */
+const CODE_PREFIX = "AUSLAN1:";
+function exportCode(){
+  const data = {v:1, h:state.hand==="left"?"L":"R", s:[...state.seen].sort().join(""), k:[...state.known], b:state.best};
+  return CODE_PREFIX + btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+}
+function readCode(text){
+  const m = String(text||"").replace(/\s+/g,"").match(/AUSLAN1:([A-Za-z0-9+/=]+)/);
+  if(!m) return null;
+  let d; try{ d = JSON.parse(decodeURIComponent(escape(atob(m[1])))); }catch(e){ return null; }
+  if(!d || d.v!==1) return null;
+  const words = new Set(SIGNS.map(s=>s.w));
+  return {
+    hand: d.h==="L" ? "left" : d.h==="R" ? "right" : null,
+    letters: [...new Set(String(d.s||"").toUpperCase().split("").filter(c=>AZ.includes(c)))],
+    known: (Array.isArray(d.k) ? d.k : []).filter(w=>words.has(w)),
+    best: Math.max(0, Math.min(9999, parseInt(d.b,10)||0))
+  };
+}
+function summary(seen, known, best){
+  return `${seen} letter${seen===1?"":"s"} opened, ${known} sign${known===1?"":"s"} known, best streak ${best}`;
+}
+function openTransfer(){
+  openSheet(`
+    <div class="sheet-top"><h2 id="sheet-title" style="margin:0">Transfer progress</h2><button class="btn small x" type="button" data-close>Close</button></div>
+    <p class="muted">Copy the code on one device, send it to yourself (a note, email or message), then paste it on the other.</p>
+    <div class="xfer">
+      <section>
+        <h3>Send from this device</h3>
+        <p class="muted" id="xfer-sum">${summary(state.seen.size, state.known.size, state.best)}.</p>
+        <label class="sr" for="xfer-out">Your transfer code</label>
+        <textarea id="xfer-out" rows="4" readonly>${exportCode()}</textarea>
+        <button class="btn primary" type="button" data-copy>Copy code</button>
+        <p class="feedback" id="xfer-copy-msg" aria-live="polite"></p>
+      </section>
+      <section>
+        <h3>Receive on this device</h3>
+        <p class="muted">Paste a code from your other device. It adds to the progress already here; nothing is lost.</p>
+        <label class="sr" for="xfer-in">Paste a transfer code</label>
+        <textarea id="xfer-in" rows="4" placeholder="Paste a code starting with AUSLAN1" autocomplete="off" spellcheck="false"></textarea>
+        <button class="btn primary" type="button" data-import>Import progress</button>
+        <p class="feedback" id="xfer-in-msg" aria-live="polite"></p>
+      </section>
+    </div>`);
+}
+function copyCode(){
+  const ta=$("#xfer-out"), msg=$("#xfer-copy-msg");
+  const fallback = ()=>{ ta.focus(); ta.select(); msg.className="feedback no"; msg.textContent="Couldn't copy automatically. The code is selected, so copy it with your device's copy command."; };
+  try{
+    navigator.clipboard.writeText(ta.value).then(()=>{ msg.className="feedback ok"; msg.textContent="Code copied. Paste it on your other device."; }, fallback);
+  }catch(e){ fallback(); }
+}
+function importProgress(){
+  const msg=$("#xfer-in-msg"), d=readCode($("#xfer-in").value);
+  if(!d){ msg.className="feedback no"; msg.textContent="That isn't a valid code. Copy the whole code, starting with AUSLAN1:, and paste it again."; return; }
+  const before={s:state.seen.size, k:state.known.size};
+  d.letters.forEach(c=>state.seen.add(c)); d.known.forEach(w=>state.known.add(w));
+  if(d.best>state.best){ state.best=d.best; store.set("best",state.best); }
+  saveSeen(); saveKnown();
+  if(d.hand && d.hand!==state.hand) setHand(d.hand);
+  refreshProgress(); drawAlphaTiles(); drawSigns();
+  const addS=state.seen.size-before.s, addK=state.known.size-before.k;
+  msg.className="feedback ok";
+  msg.textContent = `Imported. Added ${addS} letter${addS===1?"":"s"} and ${addK} sign${addK===1?"":"s"}. This device now has ${summary(state.seen.size, state.known.size, state.best)}.`;
+  $("#xfer-out").value = exportCode();
+  $("#xfer-sum").textContent = summary(state.seen.size, state.known.size, state.best)+".";
+}
+document.addEventListener("click",e=>{ if(e.target.closest("[data-transfer]")) openTransfer(); });
+
+/* sheet events */
+$("#scrim").addEventListener("click",e=>{
+  if(e.target.id==="scrim" || e.target.closest("[data-close]")) closeSheet();
+  if(e.target.closest("[data-copy]")) copyCode();
+  if(e.target.closest("[data-import]")) importProgress();
+  const g=e.target.closest("[data-go]"); if(g) openLetter(g.dataset.go);
+  const gn=e.target.closest("[data-gon]"); if(gn) openNumber(+gn.dataset.gon);
+});
+document.addEventListener("keydown",e=>{
+  if(!$("#scrim").classList.contains("on")) return;
+  if(e.key==="Escape") closeSheet();
+});
+
+/* ---------- init ---------- */
+$$(".hand-toggle button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.hand===state.hand));
+buildHome(); buildAlphabet(); buildNumbers(); buildSigns(); buildPractise();
+route();
+})();
+</script>
+</body>
+</html>
